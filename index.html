@@ -6,15 +6,38 @@
 
 <style>
 body { font-family:Tahoma; background:#f5f5f5; padding:20px; }
-input { width:100%; padding:10px; margin-bottom:15px; }
-.card {
-  background:#fff; padding:10px; margin:10px;
-  display:inline-block; width:220px;
-  border-radius:10px; box-shadow:0 0 5px #ccc;
+
+h2 { text-align:center; }
+
+input {
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
+
+.card {
+  background:#fff;
+  padding:10px;
+  margin:10px;
+  display:inline-block;
+  width:220px;
+  border-radius:10px;
+  box-shadow:0 0 5px #ccc;
+  transition:0.3s;
+}
+
+.card:hover {
+  transform:scale(1.03);
+}
+
 .card img {
-  width:100%; height:120px;
-  object-fit:cover; cursor:pointer;
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  cursor:pointer;
+  border-radius:8px;
 }
 </style>
 
@@ -26,7 +49,7 @@ input { width:100%; padding:10px; margin-bottom:15px; }
 
 <input type="text" id="search" placeholder="ابحث بالاسم أو اللوكيشن">
 
-<div id="products">جاري التحميل...</div>
+<div id="products">⏳ جاري تحميل البيانات...</div>
 
 <script>
 
@@ -34,7 +57,7 @@ const API = "https://script.google.com/macros/s/AKfycbyh0czRkVK5fjUoDyWAA0JDi6V2
 
 let products = [];
 
-// 🔥 تنظيف النص
+// 🔥 تنظيف النص (بحث ذكي)
 function normalize(text){
   return (text || "")
     .replace(/[أإا]/g, "ا")
@@ -43,42 +66,47 @@ function normalize(text){
     .toLowerCase();
 }
 
-// 🔥 جلب البيانات
+// 🔥 تحميل البيانات
 fetch(API)
 .then(res => res.json())
 .then(data => {
-  products = data;
+  products = data || [];
   render(products);
 })
-.catch(err=>{
-  document.getElementById("products").innerHTML="❌ في مشكلة في تحميل البيانات";
+.catch(()=>{
+  document.getElementById("products").innerHTML="❌ فشل تحميل البيانات";
 });
 
-// 🔥 عرض
+// 🔥 عرض البيانات
 function render(list){
   let html = "";
+
+  if(list.length === 0){
+    document.getElementById("products").innerHTML = "❌ لا يوجد نتائج";
+    return;
+  }
 
   list.forEach((p,i)=>{
     html += `
     <div class="card">
-      <img src="${p.image}" onclick="openDetails(${i})">
-      <h4>${p.name}</h4>
-      <p>📍 ${p.location}</p>
-      <p>🔢 ${p.code}</p>
-      <p>📦 ${p.qty}</p>
+      <img src="${p.image || ''}" onclick="openDetails(${i})">
+      <h4>${p.name || ''}</h4>
+      <p>📍 ${p.location || ''}</p>
+      <p>🔢 ${p.code || ''}</p>
+      <p>📦 ${p.qty || ''}</p>
     </div>`;
   });
 
   document.getElementById("products").innerHTML = html;
 }
 
-// 🔥 تفاصيل
+// 🔥 فتح التفاصيل
 function openDetails(i){
   localStorage.setItem("product", JSON.stringify(products[i]));
   window.location.href = "details.html";
 }
 
-// 🔥 سيرش ذكي
+// 🔥 البحث الذكي
 document.getElementById("search").addEventListener("input", function(){
   let value = normalize(this.value);
 
