@@ -2,43 +2,95 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>مخزن الإنتاج البحري</title>
+<title>📦 مخزن الإنتاج البحري</title>
 
 <style>
-body { font-family:Tahoma; background:#f5f5f5; padding:20px; }
+/* 🌈 خلفية متدرجة احترافية */
+body{
+  font-family:Tahoma;
+  margin:0;
+  padding:20px;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+}
 
-h2 { text-align:center; }
+/* 🏷️ العنوان */
+h2{
+  text-align:center;
+  margin-bottom:20px;
+  animation: fadeDown 1s ease;
+}
 
-input {
+/* 🔍 السيرش */
+input{
   width:100%;
   padding:12px;
-  margin-bottom:15px;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-
-.card {
-  background:#fff;
-  padding:10px;
-  margin:10px;
-  display:inline-block;
-  width:220px;
+  border:none;
   border-radius:10px;
-  box-shadow:0 0 5px #ccc;
-  transition:0.3s;
+  outline:none;
+  margin-bottom:20px;
+  font-size:16px;
 }
 
-.card:hover {
-  transform:scale(1.03);
+/* 📦 الكونتينر */
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  justify-content:center;
 }
 
-.card img {
+/* 🧊 الكارد */
+.card{
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  width:230px;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+  transition:0.4s;
+  animation: popIn 0.5s ease;
+}
+
+/* ✨ hover */
+.card:hover{
+  transform: translateY(-8px) scale(1.03);
+  box-shadow:0 15px 30px rgba(0,0,0,0.5);
+}
+
+/* 🖼️ الصورة */
+.card img{
   width:100%;
-  height:120px;
+  height:140px;
   object-fit:cover;
   cursor:pointer;
-  border-radius:8px;
+  transition:0.4s;
 }
+
+.card img:hover{
+  transform: scale(1.1);
+}
+
+/* 📝 المحتوى */
+.card-content{
+  padding:10px;
+}
+
+.card h4{
+  margin:5px 0;
+}
+
+/* ✨ أنيميشن */
+@keyframes popIn{
+  from{opacity:0; transform:scale(0.8);}
+  to{opacity:1; transform:scale(1);}
+}
+
+@keyframes fadeDown{
+  from{opacity:0; transform:translateY(-20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
 </style>
 
 </head>
@@ -47,9 +99,9 @@ input {
 
 <h2>📦 مخزن الإنتاج البحري</h2>
 
-<input type="text" id="search" placeholder="ابحث بالاسم أو اللوكيشن">
+<input type="text" id="search" placeholder="🔍 ابحث بالاسم أو اللوكيشن">
 
-<div id="products">⏳ جاري تحميل البيانات...</div>
+<div class="container" id="products">⏳ جاري التحميل...</div>
 
 <script>
 
@@ -57,19 +109,19 @@ const API = "https://script.google.com/macros/s/AKfycbyh0czRkVK5fjUoDyWAA0JDi6V2
 
 let products = [];
 
-// 🔥 تنظيف النص (بحث ذكي)
+// 🧠 تنظيف النص
 function normalize(text){
   return (text || "")
-    .replace(/[أإا]/g, "ا")
-    .replace(/ة/g, "ه")
-    .replace(/ى/g, "ي")
+    .replace(/[أإا]/g,"ا")
+    .replace(/ة/g,"ه")
+    .replace(/ى/g,"ي")
     .toLowerCase();
 }
 
-// 🔥 تحميل البيانات
+// 📥 تحميل البيانات
 fetch(API)
 .then(res => res.json())
-.then(data => {
+.then(data=>{
   products = data || [];
   render(products);
 })
@@ -77,42 +129,40 @@ fetch(API)
   document.getElementById("products").innerHTML="❌ فشل تحميل البيانات";
 });
 
-// 🔥 عرض البيانات
+// 🎨 عرض
 function render(list){
-  let html = "";
 
-  if(list.length === 0){
-    document.getElementById("products").innerHTML = "❌ لا يوجد نتائج";
-    return;
-  }
+  let html="";
 
   list.forEach((p,i)=>{
     html += `
-    <div class="card">
-      <img src="${p.image || ''}" onclick="openDetails(${i})">
-      <h4>${p.name || ''}</h4>
-      <p>📍 ${p.location || ''}</p>
-      <p>🔢 ${p.code || ''}</p>
-      <p>📦 ${p.qty || ''}</p>
+    <div class="card" onclick="openDetails(${i})">
+      <img src="${p.image || ''}">
+      <div class="card-content">
+        <h4>${p.name || ''}</h4>
+        <p>📍 ${p.location || ''}</p>
+        <p>🔢 ${p.code || ''}</p>
+        <p>📦 ${p.qty || ''}</p>
+      </div>
     </div>`;
   });
 
   document.getElementById("products").innerHTML = html;
 }
 
-// 🔥 فتح التفاصيل
+// 🔥 تفاصيل
 function openDetails(i){
   localStorage.setItem("product", JSON.stringify(products[i]));
   window.location.href = "details.html";
 }
 
-// 🔥 البحث الذكي
-document.getElementById("search").addEventListener("input", function(){
-  let value = normalize(this.value);
+// 🔍 سيرش
+document.getElementById("search").addEventListener("input",function(){
+  let val = normalize(this.value);
 
   let filtered = products.filter(p =>
-    normalize(p.name).includes(value) ||
-    normalize(p.location).includes(value)
+    normalize(p.name).includes(val) ||
+    normalize(p.location).includes(val)
   );
 
   render(filtered);
