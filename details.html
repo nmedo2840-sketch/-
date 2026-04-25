@@ -4,22 +4,129 @@
 <meta charset="UTF-8">
 <title>تفاصيل البند</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
-  font-family:Tahoma;
+  margin:0;
+  font-family: Tahoma;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   padding:20px;
-  background:#f5f5f5;
 }
-img {
-  width:100%;
-  max-width:400px;
-  border-radius:10px;
-}
+
+/* الكارت */
 .box {
-  background:#fff;
+  width:100%;
+  max-width:500px;
+  background: rgba(255,255,255,0.96);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  animation: fadeIn 0.5s ease;
+}
+
+/* الصورة */
+.img-container {
+  width:100%;
+  height:280px;
+  overflow:hidden;
+  background:#000;
+  cursor:pointer;
+}
+
+.img-container img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:0.3s;
+}
+
+.img-container img:hover {
+  transform:scale(1.05);
+}
+
+/* المحتوى */
+.content {
   padding:20px;
+}
+
+h2 {
+  margin:0 0 10px;
+  color:#1f3b57;
+}
+
+/* الأزرار */
+.top-bar {
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  background:#f1f1f1;
+}
+
+.btn {
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.back {
+  background:#dc3545;
+  color:#fff;
+}
+
+.share {
+  background:#0d6efd;
+  color:#fff;
+}
+
+p {
+  margin:8px 0;
+  color:#333;
+}
+
+/* مودال الصورة */
+.modal {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.modal img {
+  max-width:95%;
+  max-height:90%;
   border-radius:10px;
-  box-shadow:0 0 10px #ccc;
+}
+
+.close {
+  position:absolute;
+  top:20px;
+  left:20px;
+  color:#fff;
+  font-size:25px;
+  cursor:pointer;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+/* موبايل */
+@media(max-width:600px){
+  .img-container {height:220px;}
 }
 </style>
 
@@ -29,21 +136,66 @@ img {
 
 <div class="box" id="details"></div>
 
+<!-- مودال الصورة -->
+<div class="modal" id="modal">
+  <span class="close" onclick="closeModal()">✖</span>
+  <img id="modalImg">
+</div>
+
 <script>
 
-// بنجيب البيانات اللي خزناها
 let p = JSON.parse(localStorage.getItem("product"));
 
-// نعرضها
 document.getElementById("details").innerHTML = `
-  <h2>${p.name}</h2>
-  <img src="${p.image}">
-  <p>📍 ${p.location}</p>
-  <p>🔢 الكود: ${p.code}</p>
-  <p>⚖️ الوحدة: ${p.unit}</p>
-  <p>📦 الكمية: ${p.qty}</p>
-  <p>📝 ${p.desc}</p>
+  
+  <div class="top-bar">
+    <button class="btn back" onclick="goBack()">رجوع</button>
+    <button class="btn share" onclick="shareData()">مشاركة</button>
+  </div>
+
+  <div class="img-container" onclick="openImage('${p.image}')">
+    <img src="${p.image}" alt="product">
+  </div>
+
+  <div class="content">
+    <h2>${p.name}</h2>
+
+    <p>📍 <b>الموقع:</b> ${p.location}</p>
+    <p>🔢 <b>الكود:</b> ${p.code}</p>
+    <p>⚖️ <b>الوحدة:</b> ${p.unit}</p>
+    <p>📦 <b>الكمية:</b> ${p.qty}</p>
+    <p>📝 ${p.desc}</p>
+  </div>
 `;
+
+/* رجوع */
+function goBack(){
+  window.history.back();
+}
+
+/* مشاركة */
+function shareData(){
+  if(navigator.share){
+    navigator.share({
+      title: p.name,
+      text: p.desc,
+      url: window.location.href
+    });
+  } else {
+    alert("المشاركة غير مدعومة على هذا الجهاز");
+  }
+}
+
+/* فتح الصورة */
+function openImage(src){
+  document.getElementById("modal").style.display = "flex";
+  document.getElementById("modalImg").src = src;
+}
+
+/* غلق الصورة */
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
 
 </script>
 
