@@ -1,4 +1,4 @@
-# QAF Global Supply Network — Premium Industrial Marketplace
+Gharably Integrated Engineering Co. S.A.E
 
 ```html
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>QAF Global Supply Network</title>
+<title>Gharably Integrated Engineering Co. S.A.E</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
