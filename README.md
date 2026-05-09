@@ -436,7 +436,7 @@ nav a{
 
     <div class="logo">
         <img src="https://res.cloudinary.com/dq9azsujw/image/upload/q_auto/f_auto/v1778232601/5a3e8157-0d18-42b4-ba71-5abdee2af07f.png">
-        <div class="logo-text">QAF GLOBAL SUPPLY</div>
+        <div class="logo-text">Gharably Integrated Engineering Co. S.A.E</div>
     </div>
 
     <nav>
@@ -454,14 +454,12 @@ nav a{
     <div class="hero-content">
 
         <h1>
-            GLOBAL INDUSTRIAL <br>
-            SUPPLY NETWORK
+            Strong inventory management means fewer problems and faster work <br>
+            Efficiency starts from the warehouse
         </h1>
 
         <p>
-            Premium industrial procurement experience combining advanced warehouse access,
-            marine production systems, and professional supply chain infrastructure through
-            a luxury enterprise digital platform.
+            Premium warehouse management experience combining smart inventory control, industrial supply operations, and advanced storage systems through Gharably Integrated Engineering Co. S.A.E digital platform
         </p>
 
         <div class="hero-buttons">
@@ -580,7 +578,7 @@ nav a{
 <!-- ================= FOOTER ================= -->
 <footer id="contact">
 
-    <h2>QAF GLOBAL SUPPLY NETWORK</h2>
+    <h2>Gharably Integrated Engineering Co. S.A.E</h2>
 
     <p>
         Enterprise Industrial Marketplace Experience
