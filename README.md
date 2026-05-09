@@ -1,6 +1,6 @@
-<div class="logo-text">Gharably Integrated Engineering Co. S.A.E</div>
 
-<!DOCTYPE html>
+
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
