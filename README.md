@@ -46,7 +46,7 @@ body::after{
     content:"";
     position:fixed;
     inset:0;
-    background:url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=1974&auto=format&fit=crop') center/cover no-repeat;
+    background:url('https://res.cloudinary.com/dq9azsujw/image/upload/q_auto/f_auto/v1778232585/c439c687-293b-42e4-a8c3-f2530deddbd6.png') center/cover no-repeat;
     opacity:0.12;
     z-index:-2;
 }
