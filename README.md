@@ -435,7 +435,7 @@ nav a{
 <header>
 
     <div class="logo">
-        <img src="https://res.cloudinary.com/dq9azsujw/image/upload/q_auto/f_auto/v1778232601/5a3e8157-0d18-42b4-ba71-5abdee2af07f.png">
+        <img src="https://res.cloudinary.com/dq9azsujw/image/upload/q_auto/f_auto/v1778313725/0a6ab990-c1a3-4d6f-819b-13921d6d914f.png">
         <div class="logo-text">Gharably Integrated Engineering Co. S.A.E</div>
     </div>
 
